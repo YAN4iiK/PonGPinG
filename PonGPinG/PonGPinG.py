@@ -17,14 +17,23 @@ class GameSprite(sprite.Sprite):
 
 
 #Класс игрока
-class Player(GameSprite):
+class Player1(GameSprite):
     def update(self):
         global frame
         keys_pressed = key.get_pressed()
-        if keys_pressed[K_a] and self.rect.x > 5:
-            self.rect.x -= 5
-        if keys_pressed[K_d] and self.rect.x < 750:
-            self.rect.x += 5
+        if keys_pressed[K_w] and self.rect.y > 0:
+            self.rect.y -= 5
+        if keys_pressed[K_s] and self.rect.y< 600:
+            self.rect.y += 5
+
+class Player2(GameSprite):
+    def update(self):
+        global frame
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_UP] and self.rect.y > 0:
+            self.rect.y -= 5
+        if keys_pressed[K_DOWN] and self.rect.y< 600:
+            self.rect.y += 5
 
 #Окно игры
 window = display.set_mode((800,600))
@@ -35,11 +44,16 @@ bg = transform.scale(image.load('bg.jpg'), (800,600))
 #Переменные
 clock = time.Clock()
 FPS = 74
-
 font.init()
-
 lose = font.SysFont('Areal', 76).render('Поражение', True, (255, 255, 255))
 win =  font.SysFont('Areal', 76).render('Победа', True, (255, 255, 255))
+run = True
+finish = False
+racket_image = 'rаcket.png'
+#Объекты
+p1 = Player1(racket_image, 10, 100, 10, 250, 5)
+p2 = Player2(racket_image, 10, 100, 780, 250, 5)
+
 
 
 '''#Музыка
@@ -48,10 +62,6 @@ mixer.init()
 #mixer.music.play()
 fire = mixer.Sound('fire.ogg')'''
 
-
-
-run = True
-finish = False
 
 while run:
 #Завершение игры
@@ -62,7 +72,10 @@ while run:
 
     if not(finish):
         window.blit(bg, (0,0))
-
+        p1.update()
+        p1.reset()
+        p2.update()
+        p2.reset()
 
     display.update()
     clock.tick(FPS)
