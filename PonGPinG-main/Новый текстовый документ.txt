@@ -1,0 +1,8 @@
+self.speed_x = self.speed
+        self.speed_y = self.speed
+        self.rect.x += self.speed_x
+        self.rect.y += self.speed_x
+        if self.rect.y<1:
+            self.speed*=-1
+        if self.rect.y>550:
+            self.speed*=-1
